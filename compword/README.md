@@ -19,7 +19,8 @@ ALGORITHMIC APPROACH:<BR>
 		the testing is accomplished by checking {prefix, suffix} pairs of the word<BR>
 			prefix is a substring of the word starting with 0 index and having a variable length<BR>
 			suffix is the remaining substring of the word with the starting index of length(prefix)<BR>
-			if both prefix and suffix are found in the word list or are compound words, then the word is a compound word<BR>
+			if both prefix and suffix are found in the word list or are compound words, then the word 
+			is a compound word<BR>
 	this approach requires reccursion<BR>
 		let's use sort.SearchStrings([]string, string) to determine if prefix/suffix is in the word list<BR>
 		SearchStrings(...) is quite expensive for large string arrays<BR>
@@ -42,17 +43,21 @@ DATA STRUCTURES:<BR>
 	set of inValidWords implemented as a map[string]bool<BR>
 	
 JUSTIFICATION FOR ADDITIONAL DATA STRUCTURES:<BR>
-	Keys array is much smaller than the words list; for the test file, we have 263533 records and 538 buckets<BR>
-	Time needed to create the Keys array and to sort it is negligable compared to loading the words into memory<BR>
+	Keys array is much smaller than the words list; for the test file:
+		we have 263533 records and 538 buckets
+	Time needed to create/sort the Keys array is negligable compared to loading the words into memory.
 	
-	Keys array is sorted by word size in descending order -- thus, the first compound word found is the longest one<BR>
+	Keys array is sorted by word size in descending order -- thus, the first compound word found is the 
+	longest one.
 		
-	Set of invalid words (words searched and not found in the words list) is maintained to avoid searching them repeatedly during reccursions. This structure can be kept to a certain size if needed at the expense of repeated searches;<BR>
-		It could also be localized per bucket if using too much space.<BR>
-		The search algorithm is 200x faster when using the invalidWords set.<BR>
+	Set of invalid words (words searched and not found in the words list) is maintained to avoid 
+	searching them repeatedly during reccursions. This structure can be kept to a certain size if 
+	needed at the expense of repeated searches;
+		- it could also be localized per bucket if using too much space.
+		- the search algorithm is 200x faster when using the invalidWords set.
 		
-	This approach finds the longest compound word in under 0.5 milliseconds <BR>
-	on an Intel i7 2.2GH machine (for the sample data set; not counting the time to load the words into memory from the disk)<BR>
+	This approach finds the longest compound word in under 0.5 milliseconds on an Intel i7 2.2GH machine 
+	(for the sample data set; not counting the time to load the words into memory from the disk)
 
 OUTPUT EXAMPLE for the sample INPUT file of 263533 words:<BR>
 	Reading input file <local path>/word.list<BR>
